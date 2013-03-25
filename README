@@ -27,3 +27,20 @@ see http://ryan.net/misc/skitch/ipsec_L2TP_vpn_mac-20130324-233228.jpg
 for a screenshot of where to set this up on your Mac
 (on the Mac, click "Advanced" and check "Send all traffic over VPN connection"
 unless you want to add your own routes, manually.)
+
+--------
+
+What this is doing:
+
+0.  Upgrades your Ubuntu Kernel to something newer with /dev/ppp installed
+    (Soon, there should be a VM image that works out-of-the-box.  Stay tuned.)
+
+1.  Sets up IPSec on your VM with a PSK shared-secret.  This is "letmein"
+    (you should change this.  look in /etc/ipsec.secrets )
+
+2.  Sets up L2TP tunneling and a username/password for that ppp-over-IPsec
+    connection. This is "archer/dutchess". 
+    (you should change this.  look in /etc/ppp/chap-secrets )
+
+That's it... let me know if it's helpful for you.
+I'm "@ryancnelson" on twitter, and "ryancnelson" on irc.freenode.net in #smartos
