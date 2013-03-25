@@ -1,9 +1,18 @@
-All: .kernel-is-3.8.4
-	
+All: .kernel-is-3.8.4 .we-have-dev-ppp .apt-get-updated .openswan-installed
 
 clean:
 	rm -f *3.8.4*.deb
 	rm -f .kernel-is-3.8.4
+	rm -f .we-have-dev-ppp
+
+.apt-get-updated:
+	apt-get update && touch .apt-get-updated
+
+.openswan-installed: .apt-get-updated
+	aptitude install openswan && ls -la /usr/sbin/ipsec && touch .openswan-installed
+
+.we-have-dev-ppp:
+	ls -la /dev/ppp && touch .we-have-dev-ppp
 
 .kernel-is-3.8.4:
 	uname -a | grep -i ubuntu && ( uname -a | grep 3.8.4-joyent-ubuntu-12 && touch .kernel-is-3.8.4 || echo "run \"make updateto384\" to update your ubuntu kernel" ) || echo "YOU SHOULD ONLY BE RUNNING THIS ON AN UBUNTU VM!!!"
