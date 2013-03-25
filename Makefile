@@ -1,4 +1,7 @@
-All: .kernel-is-3.8.4 .we-have-dev-ppp .apt-get-updated .openswan-installed .sh-is-bash .redirects-off .setup.ipsec /etc/ipsec.conf /etc/ipsec.secrets
+All: .we-have-dev-ppp .apt-get-updated .openswan-installed .setup.ipsec
+
+PUBIP = $(shell ifconfig eth0 | grep 'inet addr' | perl -pe 's/.*inet addr:(.*)  Bca.*/\1/' )
+PRIVIP = $(shell ifconfig eth1 | grep 'inet addr' | perl -pe 's/.*inet addr:(.*)  Bca.*/\1/' )
 
 clean:
 	rm -f *3.8.4*.deb
@@ -7,18 +10,25 @@ clean:
 	rm -f .sh-is-bash
 	rm -f ipsec.conf.l2tp.example.txt ipsec.secrets.l2tp.example.txt
 	rm -f .setup.ipsec
+	rm -f .redirects-off
+	rm -f .ipv4-forwarding-on:
 
 realclean:
 	make clean
 	rm -f .apt-get-updated
 	rm -f .openswan-installed
+
+.ipv4-forwarding-on:
+	echo 1 > /proc/sys/net/ipv4/ip_forward
+	touch .ipv4-forwarding-on:
+
+.outbound-SNAT-on:
+	iptables -L -t nat | grep SNAT && iptables -t nat -I POSTROUTING -o eth0 -j SNAT --to $(PUBIP) 
+	touch .outbound-SNAT-on
 	
-.setup.ipsec: /etc/ipsec.secrets /etc/ipsec.conf ipsec.conf.l2tp.example.txt ipsec.secrets.l2tp.example.txt
-	echo "
+.setup.ipsec: /etc/ipsec.secrets /etc/ipsec.conf ipsec.conf.l2tp.example.txt ipsec.secrets.l2tp.example.txt .outbound-SNAT-on .ipv4-forwarding-on .sh-is-bash .redirects-off
 	touch .setup.ipsec
 
-PUBIP = $(shell ifconfig eth0 | grep 'inet addr' | perl -pe 's/.*inet addr:(.*)  Bca.*/\1/' )
-PRIVIP = $(shell ifconfig eth1 | grep 'inet addr' | perl -pe 's/.*inet addr:(.*)  Bca.*/\1/' )
 
 /etc/ipsec.conf: ipsec.conf.l2tp.example.txt
 	echo public IP address is $(PUBIP).
@@ -55,7 +65,7 @@ ipsec.secrets.l2tp.example.txt:
 	touch .redirects-off
 
 
-.we-have-dev-ppp:
+.we-have-dev-ppp: .kernel-is-3.8.4
 	ls -la /dev/ppp && touch .we-have-dev-ppp
 
 .kernel-is-3.8.4:
