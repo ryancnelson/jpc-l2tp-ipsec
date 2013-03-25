@@ -101,7 +101,7 @@ ipsec.secrets.l2tp.example.txt:
 
 
 .we-have-dev-ppp: .kernel-is-3.8.4
-	@ls -la /dev/ppp && touch .we-have-dev-ppp
+	@ [ -e /dev/ppp ] && touch .we-have-dev-ppp || echo "no /dev/ppp found"
 
 .kernel-is-3.8.4:
 	@uname -a | grep -i ubuntu > /dev/null && ( uname -a | grep 3.8.4-joyent-ubuntu-12 > /dev/null && touch .kernel-is-3.8.4 || echo "run \"make updateto384\" to update your ubuntu kernel" ) || echo "YOU SHOULD ONLY BE RUNNING THIS ON AN UBUNTU VM!!!"
