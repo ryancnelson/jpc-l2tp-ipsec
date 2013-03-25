@@ -1,7 +1,22 @@
-All: .we-have-dev-ppp .apt-get-updated .openswan-installed .setup.ipsec .xl2tpd-installed
+All: .we-have-dev-ppp .apt-get-updated .openswan-installed .setup.ipsec .xl2tpd-installed .bounce-things .explain-things
 
 PUBIP = $(shell ifconfig eth0 | grep 'inet addr' | perl -pe 's/.*inet addr:(.*)  Bca.*/\1/' )
 PRIVIP = $(shell ifconfig eth1 | grep 'inet addr' | perl -pe 's/.*inet addr:(.*)  Bca.*/\1/' )
+
+.bounce-things:
+	/etc/init.d/xl2tpd stop && sleep 3 ;  /etc/init.d/xl2tpd start
+	/etc/init.d/ipsec stop && sleep 3 ;  /etc/init.d/ipsec start
+
+.explain-things:
+	@echo ; echo ; echo
+	@echo "Your Public IP address is $(PUBIP). Use that as your Server Address."
+	@echo -n "your shared secret is: "
+	@cat /etc/ipsec.secrets | perl -pe 's/.*PSK //'
+	@echo ; echo "Your username/password for the VPN are in /etc/ppp/chap-secrets"
+	@echo "that file looks like this, currently:"
+	@cat /etc/ppp/chap-secrets
+	@echo 
+	
 
 clean:
 	rm -f *3.8.4*.deb
