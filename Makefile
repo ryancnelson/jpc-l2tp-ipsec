@@ -12,6 +12,7 @@ clean:
 	rm -f .setup.ipsec
 	rm -f .redirects-off
 	rm -f .ipv4-forwarding-on:
+	rm -f .outbound-SNAT-on
 
 realclean:
 	make clean
