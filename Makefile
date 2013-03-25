@@ -1,16 +1,43 @@
-All: .kernel-is-3.8.4 .we-have-dev-ppp .apt-get-updated .openswan-installed .sh-is-bash
+All: .kernel-is-3.8.4 .we-have-dev-ppp .apt-get-updated .openswan-installed .sh-is-bash .setup.ipsec /etc/ipsec.conf /etc/ipsec.secrets
 
 clean:
 	rm -f *3.8.4*.deb
 	rm -f .kernel-is-3.8.4
 	rm -f .we-have-dev-ppp
 	rm -f .sh-is-bash
+	rm -f ipsec.conf.l2tp.example.txt ipsec.secrets.l2tp.example.txt
+	rm -f .setup.ipsec
 
 realclean:
 	make clean
 	rm -f .apt-get-updated
 	rm -f .openswan-installed
 	
+.setup.ipsec: /etc/ipsec.secrets /etc/ipsec.conf ipsec.conf.l2tp.example.txt ipsec.secrets.l2tp.example.txt
+	touch .setup.ipsec
+
+PUBIP = $(shell ifconfig eth0 | grep 'inet addr' | perl -pe 's/.*inet addr:(.*)  Bca.*/\1/' )
+PRIVIP = $(shell ifconfig eth1 | grep 'inet addr' | perl -pe 's/.*inet addr:(.*)  Bca.*/\1/' )
+
+/etc/ipsec.conf: ipsec.conf.l2tp.example.txt
+	echo public IP address is $(PUBIP).
+	echo private IP address is $(PRIVIP).
+	cat ipsec.conf.l2tp.example.txt | sed -e s/198.55.55.183/$(PUBIP)/ | sed -e s/192.168.99.99/$(PRIVIP)/ > /etc/ipsec.conf
+
+/etc/ipsec.secrets: ipsec.secrets.l2tp.example.txt
+	echo public IP address is $(PUBIP).
+	echo private IP address is $(PRIVIP).
+	cat ipsec.secrets.l2tp.example.txt | sed s/198.55.55.183/$(PUBIP)/ | sed s/192.168.99.99/$(PRIVIP)/ > /etc/ipsec.secrets
+
+ipsec.conf.l2tp.example.txt:
+	wget http://l03.ryan.net/data/ipsec.conf.l2tp.example.txt
+
+ipsec.secrets.l2tp.example.txt:
+	wget http://l03.ryan.net/data/ipsec.secrets.l2tp.example.txt
+
+
+
+
 
 .sh-is-bash:
 	[ -f /bin/bash ] &&  ls -la /bin/sh | grep dash && ln -s /bin/bash /bin/sh.new && mv /bin/sh.new /bin/sh || echo "/bin/sh is not apparently a link to /bin/dash"
