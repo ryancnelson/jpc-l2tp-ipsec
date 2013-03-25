@@ -1,4 +1,4 @@
-All: .kernel-is-3.8.4 .we-have-dev-ppp .apt-get-updated .openswan-installed .sh-is-bash .setup.ipsec /etc/ipsec.conf /etc/ipsec.secrets
+All: .kernel-is-3.8.4 .we-have-dev-ppp .apt-get-updated .openswan-installed .sh-is-bash .redirects-off .setup.ipsec /etc/ipsec.conf /etc/ipsec.secrets
 
 clean:
 	rm -f *3.8.4*.deb
@@ -14,6 +14,7 @@ realclean:
 	rm -f .openswan-installed
 	
 .setup.ipsec: /etc/ipsec.secrets /etc/ipsec.conf ipsec.conf.l2tp.example.txt ipsec.secrets.l2tp.example.txt
+	echo "
 	touch .setup.ipsec
 
 PUBIP = $(shell ifconfig eth0 | grep 'inet addr' | perl -pe 's/.*inet addr:(.*)  Bca.*/\1/' )
@@ -48,6 +49,11 @@ ipsec.secrets.l2tp.example.txt:
 
 .openswan-installed: .apt-get-updated
 	aptitude install openswan && ls -la /usr/sbin/ipsec && touch .openswan-installed
+
+.redirects-off:
+	for i in /proc/sys/net/ipv4/conf/* ; do echo 0 > $i/accept_redirects ; echo 0 > $i/send_redirects ; done
+	touch .redirects-off
+
 
 .we-have-dev-ppp:
 	ls -la /dev/ppp && touch .we-have-dev-ppp
