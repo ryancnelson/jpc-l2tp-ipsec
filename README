@@ -1,0 +1,6 @@
+This is a project to create a Makefile that'll bootstrap a newly-provisioned
+Ubuntu 12.x VM in the Joyent Public Cloud (at http://my.joyentcloud.com ) into
+a working IPSec+L2TP VPN gateway, suitable for connecting your Mac OSX
+or iPhone/iPad to.
+
+
