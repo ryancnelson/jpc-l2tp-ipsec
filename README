@@ -23,5 +23,5 @@ How to use this:
 - set up your Mac to connect an IPsec+L2TP VPN to the IP Address given, 
   with shared secret "letmein", and default username/password "archer/dutchess"
 
-see http://ryan.net/misc/skitch/ipsec%2BL2TP_vpn_mac-20130324-232615.jpg
+see http://ryan.net/misc/skitch/ipsec_L2TP_vpn_mac-20130324-233228.jpg 
 for a screenshot of where to set this up on your Mac
