@@ -1,9 +1,12 @@
-All: .kernel-is-3.8.4 .we-have-dev-ppp .apt-get-updated .openswan-installed
+All: .kernel-is-3.8.4 .we-have-dev-ppp .apt-get-updated .openswan-installed .sh-is-bash
 
 clean:
 	rm -f *3.8.4*.deb
 	rm -f .kernel-is-3.8.4
 	rm -f .we-have-dev-ppp
+
+.sh-is-bash: /bin/bash
+	ls -la /bin/sh | grep dash && ( rm /bin/sh ; ln -s /bin/bash /bin/sh ) && touch .sh-is-bash
 
 .apt-get-updated:
 	apt-get update && touch .apt-get-updated
@@ -15,7 +18,7 @@ clean:
 	ls -la /dev/ppp && touch .we-have-dev-ppp
 
 .kernel-is-3.8.4:
-	uname -a | grep -i ubuntu && ( uname -a | grep 3.8.4-joyent-ubuntu-12 && touch .kernel-is-3.8.4 || echo "run \"make updateto384\" to update your ubuntu kernel" ) || echo "YOU SHOULD ONLY BE RUNNING THIS ON AN UBUNTU VM!!!"
+	uname -a | grep -i ubuntu > /dev/null && ( uname -a | grep 3.8.4-joyent-ubuntu-12 > /dev/null && touch .kernel-is-3.8.4 || echo "run \"make updateto384\" to update your ubuntu kernel" ) || echo "YOU SHOULD ONLY BE RUNNING THIS ON AN UBUNTU VM!!!"
 
 updateto384: linux-image-3.8.4-joyent-ubuntu-12-opt_1.0.0_amd64.deb linux-headers-3.8.4-joyent-ubuntu-12-opt_1.0.0_amd64.deb 
 	dpkg -i linux-image-3.8.4-joyent-ubuntu-12-opt_1.0.0_amd64.deb
