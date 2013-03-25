@@ -1,6 +1,7 @@
 This is a project to create a Makefile that'll bootstrap a newly-provisioned
 Ubuntu 12.x VM in the Joyent Public Cloud (at http://my.joyentcloud.com ) into
-a working IPSec+L2TP VPN gateway, suitable for connecting your Mac OSX computer, or iPhone/iPad to.
+a working IPSec+L2TP VPN gateway, suitable for connecting your Mac OSX 
+computer, or iPhone/iPad to.
 (this probably works with windows and other vpn clients, too, though)
 
 How to use this:
@@ -16,9 +17,11 @@ How to use this:
 - reboot, then login again in 30 seconds
 - cd jpc-l2tp-ipsec
 - make
-- answer the questions about creating an X.509 certificate with "No" (just hit return, then again for "ok")
+- answer the questions about creating an X.509 certificate with "No"
+  (just hit return, then again for "ok")
 
-- set up your Mac to connect an IPsec+L2TP VPN to the IP Address given, with shared secret "letmein", and default username/password "archer/dutchess"
+- set up your Mac to connect an IPsec+L2TP VPN to the IP Address given, 
+  with shared secret "letmein", and default username/password "archer/dutchess"
 
 see http://ryan.net/misc/skitch/ipsec%2BL2TP_vpn_mac-20130324-232615.jpg
 for a screenshot of where to set this up on your Mac
