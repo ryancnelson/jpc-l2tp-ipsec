@@ -42,5 +42,10 @@ What this is doing:
     connection. This is "archer/dutchess". 
     (you should change this.  look in /etc/ppp/chap-secrets )
 
+3.  Adds a "SNAT" rule on your Linux VM's iptables setup to allow any packets
+    forwarded over the tunnel to go out to the internet, as if they were
+    sourced from your VM's IP itself.  This lets you "surf through your VPN
+    tunnel."
+
 That's it... let me know if it's helpful for you.
 I'm "@ryancnelson" on twitter, and "ryancnelson" on irc.freenode.net in #smartos
