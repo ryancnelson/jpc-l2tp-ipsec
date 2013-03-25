@@ -29,6 +29,7 @@ clean:
 	rm -f .ipv4-forwarding-on:
 	rm -f .outbound-SNAT-on
 	rm -f xl2tpd.conf.l2tp.example.txt chap-secrets.l2tp.example.txt
+	rm -f options.xl2tpd.example.txt
 
 realclean:
 	make clean

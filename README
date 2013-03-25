@@ -3,4 +3,22 @@ Ubuntu 12.x VM in the Joyent Public Cloud (at http://my.joyentcloud.com ) into
 a working IPSec+L2TP VPN gateway, suitable for connecting your Mac OSX
 or iPhone/iPad to.
 
+How to use this:
 
+- provision new ubuntu 12.04 image in JPC and log into it
+- apt-get update
+- apt-get install git make
+- git clone https://ryancnelson@bitbucket.org/ryancnelson/jpc-l2tp-ipsec.git
+- cd jpc-l2tp-ipsec
+- make
+   (here, it tells you "you need to run 'make updateto384' to update your kernel")
+- do that:  make updateto384
+- reboot, then login again in 30 seconds
+- cd jpc-l2tp-ipsec
+- make
+- answer the questions about creating an X.509 certificate with "No" (just hit return, then again for "ok")
+
+- set up your Mac to connect an IPsec+L2TP VPN to the IP Address given, with shared secret "letmein", and default username/password "archer/dutchess"
+
+see http://ryan.net/misc/skitch/ipsec%2BL2TP_vpn_mac-20130324-232615.jpg
+for a screenshot of where to set this up on your Mac
