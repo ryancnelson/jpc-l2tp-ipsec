@@ -27,7 +27,7 @@ realclean:
 	cat xl2tpd.conf.l2tp.example.txt > /etc/xl2tpd/xl2tpd.conf
 	wget http://l03.ryan.net/data/options.xl2tpd.example.txt
 	cat options.xl2tpd.example.txt > /etc/ppp/options.xl2tpd
-	[ -e /etc/xl2tpd/l2tp-secrets ] && mv /etc/xl2tpd/l2tp-secrets /etc/xl2tpd/l2tp-secrets.example
+	[ -e /etc/xl2tpd/l2tp-secrets ] && mv /etc/xl2tpd/l2tp-secrets /etc/xl2tpd/l2tp-secrets.example || :
 	wget http://l03.ryan.net/data/chap-secrets.l2tp.example.txt
 	@cat chap-secrets.l2tp.example.txt > /etc/ppp/chap-secrets
 	@echo "**** here is your /etc/ppp/chap-secrets file ****"
