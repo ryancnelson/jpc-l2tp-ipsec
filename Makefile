@@ -1,4 +1,4 @@
-All: .we-have-dev-ppp .apt-get-updated .openswan-installed .setup.ipsec
+All: .we-have-dev-ppp .apt-get-updated .openswan-installed .setup.ipsec .xl2tpd-installed
 
 PUBIP = $(shell ifconfig eth0 | grep 'inet addr' | perl -pe 's/.*inet addr:(.*)  Bca.*/\1/' )
 PRIVIP = $(shell ifconfig eth1 | grep 'inet addr' | perl -pe 's/.*inet addr:(.*)  Bca.*/\1/' )
@@ -13,11 +13,21 @@ clean:
 	rm -f .redirects-off
 	rm -f .ipv4-forwarding-on:
 	rm -f .outbound-SNAT-on
+	rm -f xl2tpd.conf.l2tp.example.txt chap-secrets.l2tp.example.txt
 
 realclean:
 	make clean
 	rm -f .apt-get-updated
 	rm -f .openswan-installed
+
+.xl2tpd-installed:
+	apt-get install ppp
+	apt-get install xl2tpd
+	wget http://l03.ryan.net/data/xl2tpd.conf.l2tp.example.txt
+	cat xl2tpd.conf.l2tp.example.txt > /etc/xl2tpd/xl2tpd.conf
+	wget http://l03.ryan.net/data/chap-secrets.l2tp.example.txt
+	cat chap-secrets.l2tp.example.txt > /etc/ppp/chap-secrets
+
 
 .ipv4-forwarding-on:
 	echo 1 > /proc/sys/net/ipv4/ip_forward
