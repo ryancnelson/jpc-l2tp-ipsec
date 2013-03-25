@@ -37,7 +37,7 @@ realclean:
 	touch .ipv4-forwarding-on:
 
 .outbound-SNAT-on:
-	iptables -L -t nat | grep SNAT && iptables -t nat -I POSTROUTING -o eth0 -j SNAT --to $(PUBIP) 
+	@iptables -L -t nat | grep SNAT || iptables -t nat -I POSTROUTING -o eth0 -j SNAT --to $(PUBIP) 
 	touch .outbound-SNAT-on
 	
 .setup.ipsec: /etc/ipsec.secrets /etc/ipsec.conf ipsec.conf.l2tp.example.txt ipsec.secrets.l2tp.example.txt .outbound-SNAT-on .ipv4-forwarding-on .sh-is-bash .redirects-off
@@ -104,7 +104,8 @@ ipsec.secrets.l2tp.example.txt:
 	@ [ -e /dev/ppp ] && touch .we-have-dev-ppp || echo "no /dev/ppp found"
 
 .kernel-is-3.8.4:
-	@uname -a | grep -i ubuntu > /dev/null && ( uname -a | grep 3.8.4-joyent-ubuntu-12 > /dev/null && touch .kernel-is-3.8.4 || echo "run \"make updateto384\" to update your ubuntu kernel" ) && exit 9 || echo "YOU SHOULD ONLY BE RUNNING THIS ON AN UBUNTU VM!!!" && exit 10
+	@uname -a | grep -i ubuntu && || echo "YOU SHOULD ONLY BE RUNNING THIS ON AN UBUNTU VM!!!" && exit 10
+	@uname -a | grep 3.8.4-joyent-ubuntu-12 && touch .kernel-is-3.8.4 || echo "run \"make updateto384\" to update your ubuntu kernel" && exit 9 
 
 updateto384: linux-image-3.8.4-joyent-ubuntu-12-opt_1.0.0_amd64.deb linux-headers-3.8.4-joyent-ubuntu-12-opt_1.0.0_amd64.deb 
 	dpkg -i linux-image-3.8.4-joyent-ubuntu-12-opt_1.0.0_amd64.deb
