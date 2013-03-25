@@ -47,5 +47,12 @@ What this is doing:
     sourced from your VM's IP itself.  This lets you "surf through your VPN
     tunnel."
 
+One other note for SmartOS users: because this SNAT is a "one-way NAT"
+(outbound through your VPN tunnel), we never are sourcing TCP packets with
+anything other than your SmartDataCenter "blessed" public IP.  This means
+that this solution works fine without having to disable any of the "IP anti-spoof"
+rules, and works for any VM in the Joyent Public Cloud, not just enterprise 
+VLAN customers.
+
 That's it... let me know if it's helpful for you.
 I'm "@ryancnelson" on twitter, and "ryancnelson" on irc.freenode.net in #smartos
