@@ -125,7 +125,7 @@ ipsec.secrets.l2tp.example.txt:
 
 .kernel-is-3.8.4:
 	@uname -a | grep -i ubuntu > /dev/null || echo "YOU SHOULD ONLY BE RUNNING THIS ON AN UBUNTU VM!!!"
-	### here, we omit the dev/null stuff, so it displays at least once
+	@### here, we omit the dev/null stuff, so it displays at least once
 	@uname -a | grep -i ubuntu || exit 10
 	@uname -a | grep 3.8.4-joyent-ubuntu-12 || echo ; echo "run \"make updateto384\" to update your ubuntu kernel" ; echo 
 	@uname -a | grep 3.8.4-joyent-ubuntu-12 > /dev/null && touch .kernel-is-3.8.4 || exit 9 
