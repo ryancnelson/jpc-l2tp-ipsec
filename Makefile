@@ -26,7 +26,10 @@ realclean:
 	wget http://l03.ryan.net/data/xl2tpd.conf.l2tp.example.txt
 	cat xl2tpd.conf.l2tp.example.txt > /etc/xl2tpd/xl2tpd.conf
 	wget http://l03.ryan.net/data/chap-secrets.l2tp.example.txt
-	cat chap-secrets.l2tp.example.txt > /etc/ppp/chap-secrets
+	@cat chap-secrets.l2tp.example.txt > /etc/ppp/chap-secrets
+	@echo "**** here is your /etc/ppp/chap-secrets file ****"
+	@echo "YOU PROBABLY WANT TO EDIT THIS ::::::: "
+	@cat /etc/ppp/chap-secrets
 
 
 .ipv4-forwarding-on:
