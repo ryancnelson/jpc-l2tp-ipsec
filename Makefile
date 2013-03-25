@@ -4,9 +4,17 @@ clean:
 	rm -f *3.8.4*.deb
 	rm -f .kernel-is-3.8.4
 	rm -f .we-have-dev-ppp
+	rm -f .sh-is-bash
 
-.sh-is-bash: /bin/bash
-	ls -la /bin/sh | grep dash && ( rm /bin/sh ; ln -s /bin/bash /bin/sh ) && touch .sh-is-bash
+realclean:
+	make clean
+	rm -f .apt-get-updated
+	rm -f .openswan-installed
+	
+
+.sh-is-bash:
+	[ -f /bin/bash ] &&  ls -la /bin/sh | grep dash && ln -s /bin/bash /bin/sh.new && mv /bin/sh.new /bin/sh || echo "/bin/sh is not apparently a link to /bin/dash"
+	ls -la /bin/sh | grep bash && touch .sh-is-bash
 
 .apt-get-updated:
 	apt-get update && touch .apt-get-updated
