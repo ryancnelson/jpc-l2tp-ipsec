@@ -25,3 +25,5 @@ How to use this:
 
 see http://ryan.net/misc/skitch/ipsec_L2TP_vpn_mac-20130324-233228.jpg 
 for a screenshot of where to set this up on your Mac
+(on the Mac, click "Advanced" and check "Send all traffic over VPN connection"
+unless you want to add your own routes, manually.)
