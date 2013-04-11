@@ -19,8 +19,8 @@ PRIVIP = $(shell ifconfig eth1 | grep 'inet addr' | perl -pe 's/.*inet addr:(.*)
 	
 
 clean:
-	rm -f *3.8.4*.deb
-	rm -f .kernel-is-3.8.4
+	rm -f *3.8.6*.deb
+	rm -f .kernel-is-3.8.6
 	rm -f .we-have-dev-ppp
 	rm -f .sh-is-bash
 	rm -f ipsec.conf.l2tp.example.txt ipsec.secrets.l2tp.example.txt
@@ -96,6 +96,7 @@ ipsec.secrets.l2tp.example.txt:
 	aptitude install openswan && ls -la /usr/sbin/ipsec && touch .openswan-installed
 
 .redirects-off:
+	for redirect in $(shell ls /proc/sys/net/ipv4/conf/*/send_redirects ) ; do echo 0 > $$redirect ; done
 	echo 0 > /proc/sys/net/ipv4/conf/all/send_redirects
 	echo 0 > /proc/sys/net/ipv4/conf/bond0/send_redirects
 	echo 0 > /proc/sys/net/ipv4/conf/default/send_redirects
@@ -121,25 +122,25 @@ ipsec.secrets.l2tp.example.txt:
 	touch .redirects-off
 
 
-.we-have-dev-ppp: .kernel-is-3.8.4
+.we-have-dev-ppp: .kernel-is-3.8.6
 	@ [ -e /dev/ppp ] && touch .we-have-dev-ppp || echo "no /dev/ppp found"
 
-.kernel-is-3.8.4:
+.kernel-is-3.8.6:
 	@uname -a | grep -i ubuntu > /dev/null || echo "YOU SHOULD ONLY BE RUNNING THIS ON AN UBUNTU VM!!!"
 	@### here, we omit the dev/null stuff, so it displays at least once
 	@uname -a | grep -i ubuntu || exit 10
-	@uname -a | grep 3.8.4-joyent-ubuntu-12 || echo ; echo "run \"make updateto384\" to update your ubuntu kernel" ; echo 
-	@uname -a | grep 3.8.4-joyent-ubuntu-12 > /dev/null && touch .kernel-is-3.8.4 || exit 9 
+	@uname -a | grep 3.8.6-joyent-ubuntu-12 || echo ; echo "run \"make updateto386\" to update your ubuntu kernel" ; echo 
+	@uname -a | grep 3.8.6-joyent-ubuntu-12 > /dev/null && touch .kernel-is-3.8.6 || exit 9 
 
-updateto384: linux-image-3.8.4-joyent-ubuntu-12-opt_1.0.0_amd64.deb linux-headers-3.8.4-joyent-ubuntu-12-opt_1.0.0_amd64.deb 
-	dpkg -i linux-image-3.8.4-joyent-ubuntu-12-opt_1.0.0_amd64.deb
-	dpkg -i linux-headers-3.8.4-joyent-ubuntu-12-opt_1.0.0_amd64.deb
-	@echo "*** you need to reboot now to get kernel 3.8.4 ***"
+updateto386: linux-image-3.8.6-joyent-ubuntu-12-opt_1.0.0_amd64.deb linux-headers-3.8.6-joyent-ubuntu-12-opt_1.0.0_amd64.deb 
+	dpkg -i linux-image-3.8.6-joyent-ubuntu-12-opt_1.0.0_amd64.deb
+	dpkg -i linux-headers-3.8.6-joyent-ubuntu-12-opt_1.0.0_amd64.deb
+	@echo "*** you need to reboot now to get kernel 3.8.6 ***"
 
-getkerneldebs: linux-image-3.8.4-joyent-ubuntu-12-opt_1.0.0_amd64.deb linux-headers-3.8.4-joyent-ubuntu-12-opt_1.0.0_amd64.deb
+getkerneldebs: linux-image-3.8.6-joyent-ubuntu-12-opt_1.0.0_amd64.deb linux-headers-3.8.6-joyent-ubuntu-12-opt_1.0.0_amd64.deb
 
-linux-image-3.8.4-joyent-ubuntu-12-opt_1.0.0_amd64.deb:
-	wget http://l03.ryan.net/data/linux-image-3.8.4-joyent-ubuntu-12-opt_1.0.0_amd64.deb
+linux-image-3.8.6-joyent-ubuntu-12-opt_1.0.0_amd64.deb:
+	wget http://linux.joyent.com/joyent_optimized_kernels/ubuntu/12/linux-image-3.8.6-joyent-ubuntu-12-opt_1.0.0_amd64.deb
 
-linux-headers-3.8.4-joyent-ubuntu-12-opt_1.0.0_amd64.deb:
-	wget http://l03.ryan.net/data/linux-headers-3.8.4-joyent-ubuntu-12-opt_1.0.0_amd64.deb
+linux-headers-3.8.6-joyent-ubuntu-12-opt_1.0.0_amd64.deb:
+	wget http://linux.joyent.com/joyent_optimized_kernels/ubuntu/12/linux-headers-3.8.6-joyent-ubuntu-12-opt_1.0.0_amd64.deb
