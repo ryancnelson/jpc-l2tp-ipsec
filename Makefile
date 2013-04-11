@@ -97,28 +97,6 @@ ipsec.secrets.l2tp.example.txt:
 
 .redirects-off:
 	for redirect in $(shell ls /proc/sys/net/ipv4/conf/*/send_redirects ) ; do echo 0 > $$redirect ; done
-	echo 0 > /proc/sys/net/ipv4/conf/all/send_redirects
-	echo 0 > /proc/sys/net/ipv4/conf/bond0/send_redirects
-	echo 0 > /proc/sys/net/ipv4/conf/default/send_redirects
-	echo 0 > /proc/sys/net/ipv4/conf/dummy0/send_redirects
-	echo 0 > /proc/sys/net/ipv4/conf/eql/send_redirects
-	echo 0 > /proc/sys/net/ipv4/conf/eth0/send_redirects
-	echo 0 > /proc/sys/net/ipv4/conf/eth1/send_redirects
-	echo 0 > /proc/sys/net/ipv4/conf/ip6tnl0/send_redirects
-	echo 0 > /proc/sys/net/ipv4/conf/lo/send_redirects
-	echo 0 > /proc/sys/net/ipv4/conf/sit0/send_redirects
-	echo 0 > /proc/sys/net/ipv4/conf/tunl0/send_redirects
-	echo 0 > /proc/sys/net/ipv4/conf/all/accept_redirects
-	echo 0 > /proc/sys/net/ipv4/conf/bond0/accept_redirects
-	echo 0 > /proc/sys/net/ipv4/conf/default/accept_redirects
-	echo 0 > /proc/sys/net/ipv4/conf/dummy0/accept_redirects
-	echo 0 > /proc/sys/net/ipv4/conf/eql/accept_redirects
-	echo 0 > /proc/sys/net/ipv4/conf/eth0/accept_redirects
-	echo 0 > /proc/sys/net/ipv4/conf/eth1/accept_redirects
-	echo 0 > /proc/sys/net/ipv4/conf/ip6tnl0/accept_redirects
-	echo 0 > /proc/sys/net/ipv4/conf/lo/accept_redirects
-	echo 0 > /proc/sys/net/ipv4/conf/sit0/accept_redirects
-	echo 0 > /proc/sys/net/ipv4/conf/tunl0/accept_redirects
 	touch .redirects-off
 
 
