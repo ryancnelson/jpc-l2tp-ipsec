@@ -12,8 +12,8 @@ How to use this:
 - git clone https://ryancnelson@bitbucket.org/ryancnelson/jpc-l2tp-ipsec.git
 - cd jpc-l2tp-ipsec
 - make
-   (here, it tells you "you need to run 'make updateto384' to update your kernel")
-- do that:  make updateto384
+   (here, it tells you "you need to run 'make updateto386' to update your kernel")
+- do that:  make updateto386
 - reboot, then login again in 30 seconds
 - cd jpc-l2tp-ipsec
 - make
