@@ -60,6 +60,11 @@ realclean:
 .outbound-SNAT-on:
 	@iptables -L -t nat | grep SNAT || iptables -t nat -I POSTROUTING -o eth0 -j SNAT --to $(PUBIP) 
 	touch .outbound-SNAT-on
+
+### this rule isn't run by default... run "make .private-SNAT-on" to enable that.
+.private-SNAT-on:
+	@iptables -t nat -I POSTROUTING -o eth1 -j SNAT --to $(PRIVIP) 
+	touch .private-SNAT-on
 	
 .setup.ipsec: /etc/ipsec.secrets /etc/ipsec.conf ipsec.conf.l2tp.example.txt ipsec.secrets.l2tp.example.txt .outbound-SNAT-on .ipv4-forwarding-on .sh-is-bash .redirects-off
 	touch .setup.ipsec
