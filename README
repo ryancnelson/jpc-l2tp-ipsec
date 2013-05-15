@@ -33,7 +33,8 @@ unless you want to add your own routes, manually.)
 What this is doing:
 
 0.  Upgrades your Ubuntu Kernel to something newer with /dev/ppp installed
-    (Soon, there should be a VM image that works out-of-the-box.  Stay tuned.)
+    (UPDATE: May 2013 -- There exists now a Joyent Ubuntu VM image that's already got a suitable kernel installed.
+    I believe it's "Ubuntu 12.04 v 2.4.2")
 
 1.  Sets up IPSec on your VM with a PSK shared-secret.  This is "letmein"
     (you should change this.  look in /etc/ipsec.secrets )
