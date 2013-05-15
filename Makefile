@@ -112,8 +112,11 @@ ipsec.secrets.l2tp.example.txt:
 	@uname -a | grep -i ubuntu > /dev/null || echo "YOU SHOULD ONLY BE RUNNING THIS ON AN UBUNTU VM!!!"
 	@### here, we omit the dev/null stuff, so it displays at least once
 	@uname -a | grep -i ubuntu || exit 10
-	@uname -a | grep 3.8.6-joyent-ubuntu-12 || echo ; echo "run \"make updateto386\" to update your ubuntu kernel" ; echo 
+	@uname -a | grep 3.8.6-joyent-ubuntu-12 || echo ; echo "run \"make updateto386\" to update your ubuntu kernel, or, if you're certain that your kernel is ok, then run \"make .kernel-is-good-enough\" " ; echo 
 	@uname -a | grep 3.8.6-joyent-ubuntu-12 > /dev/null && touch .kernel-is-3.8.6 || exit 9 
+
+.kernel-is-good-enough:
+	touch .kernel-is-3.8.6 
 
 updateto386: linux-image-3.8.6-joyent-ubuntu-12-opt_1.0.0_amd64.deb linux-headers-3.8.6-joyent-ubuntu-12-opt_1.0.0_amd64.deb 
 	dpkg -i linux-image-3.8.6-joyent-ubuntu-12-opt_1.0.0_amd64.deb
